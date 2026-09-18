@@ -2,10 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
     content="Portfólio de moderação Discord de discernings."
@@ -14,13 +11,14 @@
 
   <style>
     :root {
-      --page: #f5f4f1;
+      --page: #f4f3f0;
       --paper: #fdfdfc;
       --ink: #101010;
-      --muted: #70706e;
+      --muted: #737371;
       --line: rgba(16, 16, 16, 0.16);
-      --shadow: 0 24px 30px rgba(12, 12, 12, 0.1),
-        0 4px 8px rgba(12, 12, 12, 0.08);
+      --shadow:
+        0 28px 38px rgba(12, 12, 12, 0.1),
+        0 5px 10px rgba(12, 12, 12, 0.07);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -40,9 +38,9 @@
       color: var(--ink);
       background:
         radial-gradient(
-          circle at 50% 3%,
+          circle at 50% 5%,
           rgba(255, 255, 255, 0.95),
-          transparent 42%
+          transparent 48%
         ),
         var(--page);
       font-family: Arial, Helvetica, sans-serif;
@@ -66,80 +64,70 @@
 
     .noise {
       position: fixed;
-      z-index: 10;
+      z-index: 20;
       inset: 0;
       pointer-events: none;
-      opacity: 0.12;
+      opacity: 0.1;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
       mix-blend-mode: multiply;
     }
 
     .page {
-      width: min(100% - 40px, 760px);
+      width: min(100% - 48px, 920px);
       min-height: 100vh;
       margin: 0 auto;
-      padding: clamp(56px, 11vh, 122px) 0 90px;
+      padding: 48px 0 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .topline {
       display: flex;
+      width: min(92%, 690px);
+      margin: 0 auto 18px;
       align-items: center;
-      justify-content: space-between;
-      width: min(88%, 548px);
-      margin: 0 auto 13px;
-      padding: 0 3px;
-    }
-
-    .micro-label {
-      margin: 0;
-      color: var(--muted);
-      font-size: 8px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      justify-content: center;
     }
 
     .info-toggle {
       display: grid;
-      width: 22px;
-      height: 22px;
+      width: 30px;
+      height: 30px;
       padding: 0;
       place-items: center;
       cursor: pointer;
       color: var(--ink);
       background: transparent;
-      border-radius: 50%;
+      border: 1px solid var(--ink);
+      border-radius: 0;
       transition:
-        background-color 240ms ease,
-        transform 320ms var(--ease);
+        color 220ms ease,
+        background-color 220ms ease,
+        opacity 220ms ease;
     }
 
     .info-toggle:hover {
-      background: rgba(16, 16, 16, 0.06);
-      transform: translateY(-1px);
+      color: var(--paper);
+      background: var(--ink);
     }
 
     .info-toggle:focus-visible {
       outline: 1px solid var(--ink);
-      outline-offset: 3px;
+      outline-offset: 4px;
     }
 
-    .info-toggle__letter {
+    .info-toggle__symbol {
       display: block;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 15px;
-      font-weight: 700;
-      font-style: italic;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      font-style: normal;
       line-height: 1;
-      transition: transform 400ms var(--ease);
-    }
-
-    .info-toggle[aria-expanded="true"] .info-toggle__letter {
-      transform: rotate(180deg);
     }
 
     .cards {
-      width: min(88%, 548px);
+      width: min(92%, 690px);
       margin: 0 auto;
     }
 
@@ -151,7 +139,7 @@
     }
 
     .hero-card {
-      min-height: 252px;
+      min-height: 318px;
     }
 
     .hero-card::before {
@@ -163,9 +151,9 @@
       background:
         linear-gradient(
           90deg,
-          rgba(253, 253, 252, 0.96) 0%,
-          rgba(253, 253, 252, 0.8) 34%,
-          rgba(253, 253, 252, 0.17) 66%,
+          rgba(253, 253, 252, 0.98) 0%,
+          rgba(253, 253, 252, 0.86) 35%,
+          rgba(253, 253, 252, 0.2) 68%,
           rgba(253, 253, 252, 0.02) 100%
         );
     }
@@ -173,9 +161,9 @@
     .hero-card::after {
       position: absolute;
       z-index: 1;
-      right: -7px;
-      bottom: 27px;
-      width: 184px;
+      right: -9px;
+      bottom: 35px;
+      width: 220px;
       height: 1px;
       content: "";
       background: var(--ink);
@@ -203,8 +191,8 @@
       position: relative;
       z-index: 2;
       display: flex;
-      min-height: 252px;
-      padding: 31px 31px 26px;
+      min-height: 318px;
+      padding: 38px 40px 32px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-between;
@@ -212,7 +200,7 @@
 
     .brand {
       margin: 0;
-      font-size: clamp(29px, 5vw, 43px);
+      font-size: clamp(35px, 5vw, 52px);
       font-weight: 900;
       letter-spacing: -0.13em;
       line-height: 0.75;
@@ -222,30 +210,31 @@
     }
 
     .brand-subtitle {
-      margin: 10px 0 0 3px;
-      font-size: 7px;
+      margin: 11px 0 0 4px;
+      font-size: 8px;
       font-weight: 700;
       letter-spacing: 0.23em;
       text-transform: uppercase;
     }
 
     .role {
-      max-width: 190px;
+      max-width: 220px;
       margin: 0;
       font-family: "Courier New", Courier, monospace;
-      font-size: 8px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.08em;
-      line-height: 1.5;
+      line-height: 1.55;
       text-transform: uppercase;
     }
 
     .contacts {
       display: grid;
-      gap: 5px;
+      gap: 6px;
       margin: 0;
       font-family: "Courier New", Courier, monospace;
-      font-size: 8px;
+      font-size: 9px;
+      font-style: normal;
       letter-spacing: -0.04em;
       line-height: 1.1;
     }
@@ -289,8 +278,8 @@
     }
 
     .details-card {
-      min-height: 292px;
-      padding: 25px 31px 23px;
+      min-height: 332px;
+      padding: 32px 40px 28px;
       transform: translateY(-15px);
       transition: transform 560ms var(--ease);
     }
@@ -309,14 +298,14 @@
 
     .details-title {
       margin: 0;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 900;
       letter-spacing: -0.075em;
       text-transform: uppercase;
     }
 
     .details-index {
-      margin: 2px 0 0;
+      margin: 3px 0 0;
       font-family: "Courier New", Courier, monospace;
       font-size: 8px;
       font-weight: 700;
@@ -325,13 +314,13 @@
     .servers {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin: 20px 0 0;
+      gap: 13px;
+      margin: 22px 0 0;
     }
 
     .server {
-      min-height: 79px;
-      padding: 11px;
+      min-height: 86px;
+      padding: 12px;
       border: 1px solid var(--line);
       transition:
         color 220ms ease,
@@ -355,8 +344,8 @@
 
     .server-name {
       display: block;
-      margin-top: 17px;
-      font-size: 10px;
+      margin-top: 19px;
+      font-size: 11px;
       font-weight: 900;
       letter-spacing: -0.04em;
       text-transform: uppercase;
@@ -364,7 +353,7 @@
 
     .server-role {
       display: block;
-      margin-top: 3px;
+      margin-top: 4px;
       font-family: "Courier New", Courier, monospace;
       font-size: 7px;
       letter-spacing: 0.05em;
@@ -376,7 +365,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-top: 24px;
+      margin-top: 27px;
     }
 
     .availability {
@@ -389,8 +378,8 @@
     .mark {
       position: relative;
       display: block;
-      width: 25px;
-      height: 25px;
+      width: 27px;
+      height: 27px;
       border: 1px solid var(--ink);
     }
 
@@ -404,8 +393,8 @@
     .mark::before {
       top: 5px;
       left: 5px;
-      width: 13px;
-      height: 13px;
+      width: 14px;
+      height: 14px;
       border: 1px solid var(--ink);
       background: transparent;
     }
@@ -413,16 +402,16 @@
     .mark::after {
       right: 4px;
       bottom: 4px;
-      width: 5px;
-      height: 5px;
+      width: 6px;
+      height: 6px;
     }
 
     .bottom-code {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: min(88%, 548px);
-      margin: 15px auto 0;
+      width: min(92%, 690px);
+      margin: 18px auto 0;
       color: var(--muted);
       font-family: "Courier New", Courier, monospace;
       font-size: 7px;
@@ -433,7 +422,7 @@
 
     .barcode {
       display: flex;
-      width: 58px;
+      width: 64px;
       height: 13px;
       align-items: stretch;
       gap: 1px;
@@ -460,13 +449,24 @@
     @media (max-width: 520px) {
       .page {
         width: min(100% - 28px, 760px);
-        padding-top: 44px;
+        min-height: auto;
+        padding: 44px 0 70px;
+        display: block;
       }
 
       .topline,
       .cards,
       .bottom-code {
         width: 100%;
+      }
+
+      .topline {
+        margin-bottom: 14px;
+      }
+
+      .info-toggle {
+        width: 28px;
+        height: 28px;
       }
 
       .hero-card,
@@ -483,6 +483,7 @@
       }
 
       .details-card {
+        min-height: 292px;
         padding: 22px;
       }
 
@@ -513,8 +514,6 @@
 
   <main class="page">
     <div class="topline">
-      <p class="micro-label">Discord moderation portfolio</p>
-
       <button
         class="info-toggle"
         id="infoToggle"
@@ -523,15 +522,14 @@
         aria-controls="serverDetails"
         aria-label="Mostrar servidores moderados"
       >
-        <span class="info-toggle__letter" aria-hidden="true">I</span>
+        <span class="info-toggle__symbol" aria-hidden="true">𝐈</span>
       </button>
     </div>
 
     <div class="cards">
-      <section class="card hero-card" aria-label="Cartão de apresentação">
+      <section class="card hero-card" aria-label="Apresentação de discernings">
         <img
           class="profile-image"
-          id="profileImage"
           src="https://i.postimg.cc/bvmBPcnM/6491cfbe20a7aa66445054ab31026cf7-(1).jpg"
           alt=""
         />
@@ -553,13 +551,13 @@
               href="https://discord.com/users/"
               target="_blank"
               rel="noreferrer"
-              aria-label="Abrir perfil do Discord"
+              aria-label="Perfil do Discord de discernings"
             >
-              dc: @discernings
+              dc: @discernings.
             </a>
 
-            <a href="mailto:seuemail@exemplo.com">
-              mail: seuemail@exemplo.com
+            <a href="mailto:diiscernings@outlook.com">
+              mail: diiscernings@outlook.com
             </a>
           </address>
         </div>
@@ -574,25 +572,25 @@
             </header>
 
             <div class="servers">
-              <a class="server" href="#" aria-label="Servidor 01">
+              <a class="server" href="#">
                 <span class="server-number">01 /</span>
                 <span class="server-name">Nome do servidor</span>
                 <span class="server-role">Moderator</span>
               </a>
 
-              <a class="server" href="#" aria-label="Servidor 02">
+              <a class="server" href="#">
                 <span class="server-number">02 /</span>
                 <span class="server-name">Nome do servidor</span>
                 <span class="server-role">Staff team</span>
               </a>
 
-              <a class="server" href="#" aria-label="Servidor 03">
+              <a class="server" href="#">
                 <span class="server-number">03 /</span>
                 <span class="server-name">Nome do servidor</span>
                 <span class="server-role">Support</span>
               </a>
 
-              <a class="server" href="#" aria-label="Servidor 04">
+              <a class="server" href="#">
                 <span class="server-number">04 /</span>
                 <span class="server-name">Nome do servidor</span>
                 <span class="server-role">Administration</span>
@@ -614,9 +612,9 @@
 
     <footer class="bottom-code" aria-label="Informações do portfólio">
       <div class="barcode" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
       </div>
 
       <span>© 2026 / discernings</span>
@@ -626,12 +624,6 @@
   <script>
     const infoToggle = document.getElementById("infoToggle");
     const serverDetails = document.getElementById("serverDetails");
-    const profileImage = document.getElementById("profileImage");
-
-    const PROFILE_IMAGE =
-      "https://i.postimg.cc/bvmBPcnM/6491cfbe20a7aa66445054ab31026cf7-(1).jpg";
-
-    profileImage.src = PROFILE_IMAGE;
 
     function toggleDetails() {
       const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
@@ -646,6 +638,22 @@
       );
 
       serverDetails.classList.toggle("is-open", nextState);
+      serverDetails.setAttribute("aria-hidden", String(!nextState));
+    }
+
+    infoToggle.addEventListener("click", toggleDetails);
+
+    document.addEventListener("keydown", (event) => {
+      const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
+
+      if (event.key === "Escape" && isOpen) {
+        toggleDetails();
+        infoToggle.focus();
+      }
+    });
+  </script>
+</body>
+</html>tState);
       serverDetails.setAttribute("aria-hidden", String(!nextState));
     }
 
