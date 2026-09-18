@@ -20,10 +20,10 @@
         0 34px 48px rgba(12, 12, 12, 0.13),
         0 10px 18px rgba(12, 12, 12, 0.08),
         0 2px 4px rgba(12, 12, 12, 0.05);
-      --shadow-open:
-        0 40px 58px rgba(12, 12, 12, 0.16),
-        0 12px 22px rgba(12, 12, 12, 0.09),
-        0 2px 5px rgba(12, 12, 12, 0.05);
+      --shadow-panel:
+        0 42px 64px rgba(12, 12, 12, 0.2),
+        0 14px 28px rgba(12, 12, 12, 0.12),
+        0 3px 7px rgba(12, 12, 12, 0.08);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -93,6 +93,7 @@
       margin: 0 auto 18px;
       align-items: center;
       justify-content: center;
+      gap: 8px;
     }
 
     .info-toggle {
@@ -112,15 +113,18 @@
         transform 180ms var(--ease);
     }
 
-    .info-toggle:hover,
-    .info-toggle:active,
-    .info-toggle[aria-expanded="true"] {
+    .info-toggle:hover {
       color: var(--paper);
       background: var(--ink);
     }
 
     .info-toggle:active {
       transform: scale(0.9);
+    }
+
+    .info-toggle.is-active {
+      color: var(--paper);
+      background: var(--ink);
     }
 
     .info-toggle:focus-visible {
@@ -264,9 +268,10 @@
       outline-offset: 3px;
     }
 
-    .details-wrap {
+    .panel-wrap {
       display: grid;
       grid-template-rows: 0fr;
+      margin-top: 0;
       opacity: 0;
       transform: translateY(-12px);
       transition:
@@ -276,28 +281,37 @@
         margin-top 560ms var(--ease);
     }
 
-    .details-wrap.is-open {
+    .panel-wrap.is-open {
       grid-template-rows: 1fr;
       margin-top: 42px;
       opacity: 1;
       transform: translateY(0);
     }
 
-    .details-clip {
+    .panel-clip {
       min-height: 0;
       overflow: hidden;
+      padding-bottom: 12px;
+    }
+
+    .panel-card {
+      box-shadow: var(--shadow-panel);
+      transform: translateY(-15px);
+      transition: transform 560ms var(--ease);
+    }
+
+    .panel-wrap.is-open .panel-card {
+      transform: translateY(0);
     }
 
     .details-card {
       min-height: 366px;
       padding: 32px 40px 28px;
-      box-shadow: var(--shadow-open);
-      transform: translateY(-15px);
-      transition: transform 560ms var(--ease);
     }
 
-    .details-wrap.is-open .details-card {
-      transform: translateY(0);
+    .studies-card {
+      min-height: 366px;
+      padding: 32px 40px 28px;
     }
 
     .details-head {
@@ -422,6 +436,50 @@
       outline-offset: 3px;
     }
 
+    .study-list {
+      display: grid;
+      gap: 0;
+      margin: 22px 0 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .study {
+      display: grid;
+      min-height: 72px;
+      padding: 13px 0;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .study-number,
+    .study-period {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .study-name {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .study-period {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .study-empty {
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9px;
+      line-height: 1.6;
+      text-transform: uppercase;
+    }
+
     .details-footer {
       display: flex;
       align-items: flex-end;
@@ -543,12 +601,13 @@
         width: 66%;
       }
 
-      .details-card {
+      .details-card,
+      .studies-card {
         min-height: 334px;
         padding: 22px;
       }
 
-      .details-wrap.is-open {
+      .panel-wrap.is-open {
         margin-top: 28px;
       }
 
@@ -559,6 +618,10 @@
       .server {
         min-height: 88px;
         padding: 10px;
+      }
+
+      .study {
+        grid-template-columns: 34px minmax(0, 1fr) auto;
       }
     }
 
@@ -582,13 +645,24 @@
     <div class="topline">
       <button
         class="info-toggle"
-        id="infoToggle"
+        id="serversToggle"
         type="button"
         aria-expanded="false"
         aria-controls="serverDetails"
         aria-label="Show moderated servers"
       >
         <span class="info-toggle__symbol" aria-hidden="true">𝐈</span>
+      </button>
+
+      <button
+        class="info-toggle"
+        id="studiesToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="studiesDetails"
+        aria-label="Show studies"
+      >
+        <span class="info-toggle__symbol" aria-hidden="true">𝐈𝐈</span>
       </button>
     </div>
 
@@ -629,9 +703,12 @@
         </div>
       </section>
 
-      <div class="details-wrap" id="serverDetails" aria-hidden="true">
-        <div class="details-clip">
-          <section class="card details-card" aria-label="Moderated servers">
+      <div class="panel-wrap" id="serverDetails" aria-hidden="true">
+        <div class="panel-clip">
+          <section
+            class="card panel-card details-card"
+            aria-label="Moderated servers"
+          >
             <header class="details-head">
               <h2 class="details-title">Servers</h2>
               <p class="details-index">selected / 04</p>
@@ -668,7 +745,7 @@
                   href="https://discord.gg/YOUR-INVITE-LINK"
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Open Server name on Discord"
+                  aria-label="Open server 02 on Discord"
                 >
                   ↗
                 </a>
@@ -686,7 +763,7 @@
                   href="https://discord.gg/YOUR-INVITE-LINK"
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Open Server name on Discord"
+                  aria-label="Open server 03 on Discord"
                 >
                   ↗
                 </a>
@@ -704,7 +781,7 @@
                   href="https://discord.gg/YOUR-INVITE-LINK"
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Open Server name on Discord"
+                  aria-label="Open server 04 on Discord"
                 >
                   ↗
                 </a>
@@ -715,6 +792,50 @@
               <p class="availability">
                 AVAILABLE FOR<br />
                 COMMUNITY MANAGEMENT
+              </p>
+
+              <span class="mark" aria-hidden="true"></span>
+            </footer>
+          </section>
+        </div>
+      </div>
+
+      <div class="panel-wrap" id="studiesDetails" aria-hidden="true">
+        <div class="panel-clip">
+          <section
+            class="card panel-card studies-card"
+            aria-label="Studies and education"
+          >
+            <header class="details-head">
+              <h2 class="details-title">Studies</h2>
+              <p class="details-index">archive / 00</p>
+            </header>
+
+            <!-- Replace these examples with your own studies. -->
+            <div class="study-list">
+              <article class="study">
+                <span class="study-number">01 /</span>
+                <span class="study-name">Study title</span>
+                <span class="study-period">Year</span>
+              </article>
+
+              <article class="study">
+                <span class="study-number">02 /</span>
+                <span class="study-name">Study title</span>
+                <span class="study-period">Year</span>
+              </article>
+
+              <article class="study">
+                <span class="study-number">03 /</span>
+                <span class="study-name">Study title</span>
+                <span class="study-period">Year</span>
+              </article>
+            </div>
+
+            <footer class="details-footer">
+              <p class="availability">
+                CONTINUOUS<br />
+                LEARNING
               </p>
 
               <span class="mark" aria-hidden="true"></span>
@@ -736,33 +857,91 @@
   </main>
 
   <script>
-    const infoToggle = document.getElementById("infoToggle");
+    const serversToggle = document.getElementById("serversToggle");
+    const studiesToggle = document.getElementById("studiesToggle");
     const serverDetails = document.getElementById("serverDetails");
+    const studiesDetails = document.getElementById("studiesDetails");
 
-    function toggleDetails() {
-      const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
-      const nextState = !isOpen;
+    function setPanelState(button, panel, isOpen, openLabel, closeLabel) {
+      button.setAttribute("aria-expanded", String(isOpen));
+      button.setAttribute("aria-label", isOpen ? closeLabel : openLabel);
+      button.classList.toggle("is-active", isOpen);
 
-      infoToggle.setAttribute("aria-expanded", String(nextState));
-      infoToggle.setAttribute(
-        "aria-label",
-        nextState
-          ? "Close moderated servers"
-          : "Show moderated servers"
-      );
-
-      serverDetails.classList.toggle("is-open", nextState);
-      serverDetails.setAttribute("aria-hidden", String(!nextState));
+      panel.classList.toggle("is-open", isOpen);
+      panel.setAttribute("aria-hidden", String(!isOpen));
     }
 
-    infoToggle.addEventListener("click", toggleDetails);
+    function closeServers() {
+      setPanelState(
+        serversToggle,
+        serverDetails,
+        false,
+        "Show moderated servers",
+        "Close moderated servers"
+      );
+    }
+
+    function closeStudies() {
+      setPanelState(
+        studiesToggle,
+        studiesDetails,
+        false,
+        "Show studies",
+        "Close studies"
+      );
+    }
+
+    serversToggle.addEventListener("click", () => {
+      const isOpen = serversToggle.getAttribute("aria-expanded") === "true";
+
+      if (!isOpen) {
+        closeStudies();
+      }
+
+      setPanelState(
+        serversToggle,
+        serverDetails,
+        !isOpen,
+        "Show moderated servers",
+        "Close moderated servers"
+      );
+    });
+
+    studiesToggle.addEventListener("click", () => {
+      const isOpen = studiesToggle.getAttribute("aria-expanded") === "true";
+
+      if (!isOpen) {
+        closeServers();
+      }
+
+      setPanelState(
+        studiesToggle,
+        studiesDetails,
+        !isOpen,
+        "Show studies",
+        "Close studies"
+      );
+    });
 
     document.addEventListener("keydown", (event) => {
-      const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
+      if (event.key !== "Escape") {
+        return;
+      }
 
-      if (event.key === "Escape" && isOpen) {
-        toggleDetails();
-        infoToggle.focus();
+      const serversOpen =
+        serversToggle.getAttribute("aria-expanded") === "true";
+
+      const studiesOpen =
+        studiesToggle.getAttribute("aria-expanded") === "true";
+
+      if (serversOpen) {
+        closeServers();
+        serversToggle.focus();
+      }
+
+      if (studiesOpen) {
+        closeStudies();
+        studiesToggle.focus();
       }
     });
   </script>
