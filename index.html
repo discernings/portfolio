@@ -336,14 +336,21 @@
       padding: 12px;
       align-items: stretch;
       justify-content: space-between;
+      color: var(--ink);
+      background: transparent;
       border: 1px solid var(--line);
       transition:
+        color 220ms ease,
+        background-color 220ms ease,
         border-color 220ms ease,
         transform 260ms var(--ease);
     }
 
-    .server:hover {
-      border-color: rgba(16, 16, 16, 0.42);
+    .server:hover,
+    .server:has(.server-link:active) {
+      color: var(--paper);
+      background: var(--ink);
+      border-color: var(--ink);
       transform: translateY(-3px);
     }
 
@@ -388,7 +395,7 @@
       margin-left: 12px;
       place-items: center;
       cursor: pointer;
-      color: var(--ink);
+      color: currentColor;
       border: 1px solid currentColor;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 13px;
@@ -400,10 +407,10 @@
         transform 220ms var(--ease);
     }
 
-    .server-link:hover {
-      color: var(--paper);
-      background: var(--ink);
-      transform: translate(1px, -1px);
+    .server:hover .server-link,
+    .server:has(.server-link:active) .server-link {
+      color: var(--ink);
+      background: var(--paper);
     }
 
     .server-link:active {
