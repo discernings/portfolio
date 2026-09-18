@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta
+    name="description"
+    content="Portfólio de moderação Discord de discernings."
+  />
+  <title>discernings — Discord Moderator</title>
+
+  <style>
+    :root {
+      --page: #f5f4f1;
+      --paper: #fdfdfc;
+      --ink: #101010;
+      --muted: #70706e;
+      --line: rgba(16, 16, 16, 0.16);
+      --shadow: 0 24px 30px rgba(12, 12, 12, 0.1),
+        0 4px 8px rgba(12, 12, 12, 0.08);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--page);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(
+          circle at 50% 3%,
+          rgba(255, 255, 255, 0.95),
+          transparent 42%
+        ),
+        var(--page);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .noise {
+      position: fixed;
+      z-index: 10;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    .page {
+      width: min(100% - 40px, 760px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(56px, 11vh, 122px) 0 90px;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(88%, 548px);
+      margin: 0 auto 13px;
+      padding: 0 3px;
+    }
+
+    .micro-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .info-toggle {
+      display: grid;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      place-items: center;
+      cursor: pointer;
+      color: var(--ink);
+      background: transparent;
+      border-radius: 50%;
+      transition:
+        background-color 240ms ease,
+        transform 320ms var(--ease);
+    }
+
+    .info-toggle:hover {
+      background: rgba(16, 16, 16, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .info-toggle:focus-visible {
+      outline: 1px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .info-toggle__letter {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1;
+      transition: transform 400ms var(--ease);
+    }
+
+    .info-toggle[aria-expanded="true"] .info-toggle__letter {
+      transform: rotate(180deg);
+    }
+
+    .cards {
+      width: min(88%, 548px);
+      margin: 0 auto;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      min-height: 252px;
+    }
+
+    .hero-card::before {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(253, 253, 252, 0.96) 0%,
+          rgba(253, 253, 252, 0.8) 34%,
+          rgba(253, 253, 252, 0.17) 66%,
+          rgba(253, 253, 252, 0.02) 100%
+        );
+    }
+
+    .hero-card::after {
+      position: absolute;
+      z-index: 1;
+      right: -7px;
+      bottom: 27px;
+      width: 184px;
+      height: 1px;
+      content: "";
+      background: var(--ink);
+      transform: rotate(-15deg);
+      transform-origin: right center;
+      opacity: 0.9;
+    }
+
+    .profile-image {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      right: 0;
+      width: 62%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(1) contrast(1.08) brightness(1.13);
+      opacity: 0.78;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      min-height: 252px;
+      padding: 31px 31px 26px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .brand {
+      margin: 0;
+      font-size: clamp(29px, 5vw, 43px);
+      font-weight: 900;
+      letter-spacing: -0.13em;
+      line-height: 0.75;
+      text-transform: uppercase;
+      transform: scaleX(1.13);
+      transform-origin: left center;
+    }
+
+    .brand-subtitle {
+      margin: 10px 0 0 3px;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+    }
+
+    .role {
+      max-width: 190px;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
+    .contacts {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .contacts a {
+      width: fit-content;
+      transition: opacity 200ms ease;
+    }
+
+    .contacts a:hover {
+      opacity: 0.52;
+    }
+
+    .contacts a:focus-visible {
+      outline: 1px solid var(--ink);
+      outline-offset: 3px;
+    }
+
+    .details-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition:
+        grid-template-rows 560ms var(--ease),
+        opacity 300ms ease,
+        transform 560ms var(--ease),
+        margin-top 560ms var(--ease);
+    }
+
+    .details-wrap.is-open {
+      grid-template-rows: 1fr;
+      margin-top: 42px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .details-clip {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .details-card {
+      min-height: 292px;
+      padding: 25px 31px 23px;
+      transform: translateY(-15px);
+      transition: transform 560ms var(--ease);
+    }
+
+    .details-wrap.is-open .details-card {
+      transform: translateY(0);
+    }
+
+    .details-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .details-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.075em;
+      text-transform: uppercase;
+    }
+
+    .details-index {
+      margin: 2px 0 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .servers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0 0;
+    }
+
+    .server {
+      min-height: 79px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      transition:
+        color 220ms ease,
+        background-color 220ms ease,
+        transform 260ms var(--ease);
+    }
+
+    .server:hover {
+      color: var(--paper);
+      background: var(--ink);
+      transform: translateY(-3px);
+    }
+
+    .server-number {
+      display: block;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      font-weight: 700;
+      opacity: 0.68;
+    }
+
+    .server-name {
+      display: block;
+      margin-top: 17px;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .server-role {
+      display: block;
+      margin-top: 3px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 7px;
+      letter-spacing: 0.05em;
+      opacity: 0.75;
+      text-transform: uppercase;
+    }
+
+    .details-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 24px;
+    }
+
+    .availability {
+      margin: 0;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      line-height: 1.45;
+    }
+
+    .mark {
+      position: relative;
+      display: block;
+      width: 25px;
+      height: 25px;
+      border: 1px solid var(--ink);
+    }
+
+    .mark::before,
+    .mark::after {
+      position: absolute;
+      content: "";
+      background: var(--ink);
+    }
+
+    .mark::before {
+      top: 5px;
+      left: 5px;
+      width: 13px;
+      height: 13px;
+      border: 1px solid var(--ink);
+      background: transparent;
+    }
+
+    .mark::after {
+      right: 4px;
+      bottom: 4px;
+      width: 5px;
+      height: 5px;
+    }
+
+    .bottom-code {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(88%, 548px);
+      margin: 15px auto 0;
+      color: var(--muted);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .barcode {
+      display: flex;
+      width: 58px;
+      height: 13px;
+      align-items: stretch;
+      gap: 1px;
+      opacity: 0.72;
+    }
+
+    .barcode span {
+      display: block;
+      flex: 1;
+      background: var(--ink);
+    }
+
+    .barcode span:nth-child(2),
+    .barcode span:nth-child(5),
+    .barcode span:nth-child(8) {
+      flex: 0.35;
+    }
+
+    .barcode span:nth-child(4),
+    .barcode span:nth-child(10) {
+      flex: 1.55;
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 28px, 760px);
+        padding-top: 44px;
+      }
+
+      .topline,
+      .cards,
+      .bottom-code {
+        width: 100%;
+      }
+
+      .hero-card,
+      .hero-content {
+        min-height: 224px;
+      }
+
+      .hero-content {
+        padding: 26px 22px 22px;
+      }
+
+      .profile-image {
+        width: 66%;
+      }
+
+      .details-card {
+        padding: 22px;
+      }
+
+      .details-wrap.is-open {
+        margin-top: 28px;
+      }
+
+      .servers {
+        gap: 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <main class="page">
+    <div class="topline">
+      <p class="micro-label">Discord moderation portfolio</p>
+
+      <button
+        class="info-toggle"
+        id="infoToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="serverDetails"
+        aria-label="Mostrar servidores moderados"
+      >
+        <span class="info-toggle__letter" aria-hidden="true">I</span>
+      </button>
+    </div>
+
+    <div class="cards">
+      <section class="card hero-card" aria-label="Cartão de apresentação">
+        <img
+          class="profile-image"
+          id="profileImage"
+          src="https://i.postimg.cc/bvmBPcnM/6491cfbe20a7aa66445054ab31026cf7-(1).jpg"
+          alt=""
+        />
+
+        <div class="hero-content">
+          <div>
+            <h1 class="brand">discernings</h1>
+            <p class="brand-subtitle">discord moderation</p>
+          </div>
+
+          <p class="role">
+            Community safety<br />
+            Moderation / Support<br />
+            Server operations
+          </p>
+
+          <address class="contacts">
+            <a
+              href="https://discord.com/users/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Abrir perfil do Discord"
+            >
+              dc: @discernings
+            </a>
+
+            <a href="mailto:seuemail@exemplo.com">
+              mail: seuemail@exemplo.com
+            </a>
+          </address>
+        </div>
+      </section>
+
+      <div class="details-wrap" id="serverDetails" aria-hidden="true">
+        <div class="details-clip">
+          <section class="card details-card" aria-label="Servidores moderados">
+            <header class="details-head">
+              <h2 class="details-title">Servers</h2>
+              <p class="details-index">selected / 04</p>
+            </header>
+
+            <div class="servers">
+              <a class="server" href="#" aria-label="Servidor 01">
+                <span class="server-number">01 /</span>
+                <span class="server-name">Nome do servidor</span>
+                <span class="server-role">Moderator</span>
+              </a>
+
+              <a class="server" href="#" aria-label="Servidor 02">
+                <span class="server-number">02 /</span>
+                <span class="server-name">Nome do servidor</span>
+                <span class="server-role">Staff team</span>
+              </a>
+
+              <a class="server" href="#" aria-label="Servidor 03">
+                <span class="server-number">03 /</span>
+                <span class="server-name">Nome do servidor</span>
+                <span class="server-role">Support</span>
+              </a>
+
+              <a class="server" href="#" aria-label="Servidor 04">
+                <span class="server-number">04 /</span>
+                <span class="server-name">Nome do servidor</span>
+                <span class="server-role">Administration</span>
+              </a>
+            </div>
+
+            <footer class="details-footer">
+              <p class="availability">
+                AVAILABLE FOR<br />
+                COMMUNITY MANAGEMENT
+              </p>
+
+              <span class="mark" aria-hidden="true"></span>
+            </footer>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bottom-code" aria-label="Informações do portfólio">
+      <div class="barcode" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span>
+      </div>
+
+      <span>© 2026 / discernings</span>
+    </footer>
+  </main>
+
+  <script>
+    const infoToggle = document.getElementById("infoToggle");
+    const serverDetails = document.getElementById("serverDetails");
+    const profileImage = document.getElementById("profileImage");
+
+    const PROFILE_IMAGE =
+      "https://i.postimg.cc/bvmBPcnM/6491cfbe20a7aa66445054ab31026cf7-(1).jpg";
+
+    profileImage.src = PROFILE_IMAGE;
+
+    function toggleDetails() {
+      const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
+      const nextState = !isOpen;
+
+      infoToggle.setAttribute("aria-expanded", String(nextState));
+      infoToggle.setAttribute(
+        "aria-label",
+        nextState
+          ? "Fechar lista de servidores moderados"
+          : "Mostrar servidores moderados"
+      );
+
+      serverDetails.classList.toggle("is-open", nextState);
+      serverDetails.setAttribute("aria-hidden", String(!nextState));
+    }
+
+    infoToggle.addEventListener("click", toggleDetails);
+
+    document.addEventListener("keydown", (event) => {
+      const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
+
+      if (event.key === "Escape" && isOpen) {
+        toggleDetails();
+        infoToggle.focus();
+      }
+    });
+  </script>
+</body>
+</html>
