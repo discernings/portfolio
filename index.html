@@ -431,6 +431,41 @@
       outline-offset: 3px;
     }
 
+    .server.is-empty {
+      color: var(--muted);
+    }
+
+    .server.is-empty:hover {
+      color: var(--muted);
+      background: transparent;
+      border-color: var(--line);
+      transform: none;
+    }
+
+    .server-empty-label {
+      display: block;
+      margin-top: auto;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .server-empty-mark {
+      display: grid;
+      width: 21px;
+      height: 21px;
+      flex: 0 0 21px;
+      margin-left: 12px;
+      place-items: center;
+      color: currentColor;
+      border: 1px solid currentColor;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      line-height: 1;
+    }
+
     .studies-description {
       max-width: 515px;
       margin: 26px 0 0;
@@ -705,55 +740,37 @@
               <article class="server">
                 <div class="server-copy">
                   <span class="server-number">02 /</span>
-                  <span class="server-name">Server name</span>
-                  <span class="server-role">Staff team</span>
+                  <span class="server-name">Cartny Server</span>
+                  <span class="server-role">Manager</span>
                 </div>
 
                 <a
                   class="server-link"
-                  href="https://discord.gg/YOUR-INVITE-LINK"
+                  href="https://discord.gg/dmvwS2eaq7"
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Open server 02 on Discord"
+                  aria-label="Open Cartny Server on Discord"
                 >
                   ↗
                 </a>
               </article>
 
-              <article class="server">
+              <article class="server is-empty" aria-label="Empty server slot">
                 <div class="server-copy">
                   <span class="server-number">03 /</span>
-                  <span class="server-name">Server name</span>
-                  <span class="server-role">Support</span>
+                  <span class="server-empty-label">Empty</span>
                 </div>
 
-                <a
-                  class="server-link"
-                  href="https://discord.gg/YOUR-INVITE-LINK"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Open server 03 on Discord"
-                >
-                  ↗
-                </a>
+                <span class="server-empty-mark" aria-hidden="true">—</span>
               </article>
 
-              <article class="server">
+              <article class="server is-empty" aria-label="Empty server slot">
                 <div class="server-copy">
                   <span class="server-number">04 /</span>
-                  <span class="server-name">Server name</span>
-                  <span class="server-role">Administration</span>
+                  <span class="server-empty-label">Empty</span>
                 </div>
 
-                <a
-                  class="server-link"
-                  href="https://discord.gg/YOUR-INVITE-LINK"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Open server 04 on Discord"
-                >
-                  ↗
-                </a>
+                <span class="server-empty-mark" aria-hidden="true">—</span>
               </article>
             </div>
 
