@@ -653,20 +653,4 @@
     });
   </script>
 </body>
-</html>tState);
-      serverDetails.setAttribute("aria-hidden", String(!nextState));
-    }
-
-    infoToggle.addEventListener("click", toggleDetails);
-
-    document.addEventListener("keydown", (event) => {
-      const isOpen = infoToggle.getAttribute("aria-expanded") === "true";
-
-      if (event.key === "Escape" && isOpen) {
-        toggleDetails();
-        infoToggle.focus();
-      }
-    });
-  </script>
-</body>
 </html>
