@@ -310,7 +310,7 @@
     }
 
     .studies-card {
-      min-height: 366px;
+      min-height: 310px;
       padding: 32px 40px 28px;
     }
 
@@ -436,47 +436,28 @@
       outline-offset: 3px;
     }
 
-    .study-list {
-      display: grid;
-      gap: 0;
-      margin: 22px 0 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .study {
-      display: grid;
-      min-height: 72px;
-      padding: 13px 0;
-      grid-template-columns: 42px minmax(0, 1fr) auto;
-      align-items: center;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .study-number,
-    .study-period {
+    .studies-description {
+      max-width: 515px;
+      margin: 26px 0 0;
       font-family: "Courier New", Courier, monospace;
-      font-size: 8px;
+      font-size: 10px;
       font-weight: 700;
-    }
-
-    .study-name {
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
+      letter-spacing: 0.03em;
+      line-height: 1.8;
       text-transform: uppercase;
     }
 
-    .study-period {
-      color: var(--muted);
-      text-align: right;
+    .studies-description strong {
+      font-weight: 700;
     }
 
-    .study-empty {
-      margin: 28px 0 0;
+    .studies-note {
+      margin: 18px 0 0;
       color: var(--muted);
       font-family: "Courier New", Courier, monospace;
-      font-size: 9px;
-      line-height: 1.6;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      line-height: 1.55;
       text-transform: uppercase;
     }
 
@@ -601,9 +582,13 @@
         width: 66%;
       }
 
-      .details-card,
-      .studies-card {
+      .details-card {
         min-height: 334px;
+        padding: 22px;
+      }
+
+      .studies-card {
+        min-height: 285px;
         padding: 22px;
       }
 
@@ -620,8 +605,8 @@
         padding: 10px;
       }
 
-      .study {
-        grid-template-columns: 34px minmax(0, 1fr) auto;
+      .studies-description {
+        font-size: 9px;
       }
     }
 
@@ -808,29 +793,19 @@
           >
             <header class="details-head">
               <h2 class="details-title">Studies</h2>
-              <p class="details-index">archive / 00</p>
+              <p class="details-index">notes / 01</p>
             </header>
 
-            <!-- Replace these examples with your own studies. -->
-            <div class="study-list">
-              <article class="study">
-                <span class="study-number">01 /</span>
-                <span class="study-name">Study title</span>
-                <span class="study-period">Year</span>
-              </article>
+            <!-- Replace only the paragraph below with your own text. -->
+            <p class="studies-description">
+              Write your studies, certifications, areas of interest, current
+              learning path, or any relevant academic and professional
+              information here.
+            </p>
 
-              <article class="study">
-                <span class="study-number">02 /</span>
-                <span class="study-name">Study title</span>
-                <span class="study-period">Year</span>
-              </article>
-
-              <article class="study">
-                <span class="study-number">03 /</span>
-                <span class="study-name">Study title</span>
-                <span class="study-period">Year</span>
-              </article>
-            </div>
+            <p class="studies-note">
+              Edit this description directly in the HTML file.
+            </p>
 
             <footer class="details-footer">
               <p class="availability">
