@@ -338,21 +338,18 @@
       justify-content: space-between;
       border: 1px solid var(--line);
       transition:
-        color 220ms ease,
-        background-color 220ms ease,
         border-color 220ms ease,
         transform 260ms var(--ease);
     }
 
     .server:hover {
-      color: var(--paper);
-      background: var(--ink);
-      border-color: var(--ink);
+      border-color: rgba(16, 16, 16, 0.42);
       transform: translateY(-3px);
     }
 
     .server-copy {
       display: flex;
+      min-width: 0;
       flex-direction: column;
     }
 
@@ -385,11 +382,12 @@
 
     .server-link {
       display: grid;
-      width: 20px;
-      height: 20px;
-      flex: 0 0 20px;
-      margin-left: 10px;
+      width: 21px;
+      height: 21px;
+      flex: 0 0 21px;
+      margin-left: 12px;
       place-items: center;
+      cursor: pointer;
       color: var(--ink);
       border: 1px solid currentColor;
       font-family: Arial, Helvetica, sans-serif;
@@ -397,18 +395,24 @@
       font-weight: 500;
       line-height: 1;
       transition:
-        color 220ms ease,
-        background-color 220ms ease;
+        color 200ms ease,
+        background-color 200ms ease,
+        transform 220ms var(--ease);
     }
 
-    .server:hover .server-link {
-      color: var(--ink);
-      background: var(--paper);
+    .server-link:hover {
+      color: var(--paper);
+      background: var(--ink);
+      transform: translate(1px, -1px);
     }
 
-    .server:focus-visible {
+    .server-link:active {
+      transform: scale(0.92);
+    }
+
+    .server-link:focus-visible {
       outline: 1px solid var(--ink);
-      outline-offset: 4px;
+      outline-offset: 3px;
     }
 
     .details-footer {
@@ -627,70 +631,77 @@
             </header>
 
             <div class="servers">
-              <!-- Replace the href value with the Discord invite URL. -->
-              <a
-                class="server"
-                href="https://discord.gg/YOUR-INVITE-LINK"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open server 01"
-              >
-                <span class="server-copy">
+              <article class="server">
+                <div class="server-copy">
                   <span class="server-number">01 /</span>
                   <span class="server-name">Server name</span>
                   <span class="server-role">Moderator</span>
-                </span>
+                </div>
 
-                <span class="server-link" aria-hidden="true">↗</span>
-              </a>
+                <a
+                  class="server-link"
+                  href="https://discord.gg/YOUR-INVITE-LINK"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Server name on Discord"
+                >
+                  ↗
+                </a>
+              </article>
 
-              <a
-                class="server"
-                href="https://discord.gg/YOUR-INVITE-LINK"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open server 02"
-              >
-                <span class="server-copy">
+              <article class="server">
+                <div class="server-copy">
                   <span class="server-number">02 /</span>
                   <span class="server-name">Server name</span>
                   <span class="server-role">Staff team</span>
-                </span>
+                </div>
 
-                <span class="server-link" aria-hidden="true">↗</span>
-              </a>
+                <a
+                  class="server-link"
+                  href="https://discord.gg/YOUR-INVITE-LINK"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Server name on Discord"
+                >
+                  ↗
+                </a>
+              </article>
 
-              <a
-                class="server"
-                href="https://discord.gg/YOUR-INVITE-LINK"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open server 03"
-              >
-                <span class="server-copy">
+              <article class="server">
+                <div class="server-copy">
                   <span class="server-number">03 /</span>
                   <span class="server-name">Server name</span>
                   <span class="server-role">Support</span>
-                </span>
+                </div>
 
-                <span class="server-link" aria-hidden="true">↗</span>
-              </a>
+                <a
+                  class="server-link"
+                  href="https://discord.gg/YOUR-INVITE-LINK"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Server name on Discord"
+                >
+                  ↗
+                </a>
+              </article>
 
-              <a
-                class="server"
-                href="https://discord.gg/YOUR-INVITE-LINK"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open server 04"
-              >
-                <span class="server-copy">
+              <article class="server">
+                <div class="server-copy">
                   <span class="server-number">04 /</span>
                   <span class="server-name">Server name</span>
                   <span class="server-role">Administration</span>
-                </span>
+                </div>
 
-                <span class="server-link" aria-hidden="true">↗</span>
-              </a>
+                <a
+                  class="server-link"
+                  href="https://discord.gg/YOUR-INVITE-LINK"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Server name on Discord"
+                >
+                  ↗
+                </a>
+              </article>
             </div>
 
             <footer class="details-footer">
